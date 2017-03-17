@@ -6,8 +6,8 @@ class CreatePatients < ActiveRecord::Migration[5.1]
       t.date :date_of_birth
       t.text :address
       t.bigint :phone_number
-      t.text :allergies
       t.text :notes
+      t.text :allergies
 
       t.timestamps
     end

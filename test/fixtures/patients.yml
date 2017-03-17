@@ -6,8 +6,8 @@ one:
   date_of_birth: 2017-03-17
   address: MyText
   phone_number: 
-  allergies: MyText
   notes: MyText
+  allergies: MyText
 
 two:
   first_name: MyString
@@ -15,5 +15,5 @@ two:
   date_of_birth: 2017-03-17
   address: MyText
   phone_number: 
-  allergies: MyText
   notes: MyText
+  allergies: MyText

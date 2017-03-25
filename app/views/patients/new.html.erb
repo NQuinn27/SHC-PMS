@@ -1,5 +1,10 @@
-<h1>New Patient</h1>
-
-<%= render 'form', patient: @patient %>
-
-<%= link_to 'Back', patients_path %>
+<%= flash_messages %>
+<div id="content_head">
+  <div id="ch-title">
+    <h1>Add Patient</h1>
+  </div>
+</div>
+<%= render "patients/form" %>
+<script type="text/javascript">
+  $("#posts_menu_item").toggleClass("active")
+</script>

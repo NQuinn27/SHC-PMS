@@ -1,14 +1,30 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>SHCPms</title>
-    <%= csrf_meta_tags %>
+<%= render 'partials/header' %>
+<%= render 'partials/nav_bar' %>
+<div id="wrapper">
+  <div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+      <li>
+        <a href="<%= patients_path %>" id="patients_menu_item">Patients</a>
+      </li>
+      <li>
+        <a href="#" id="condtitions_menu_item">Conditions</a>
+      </li>
+      <li>
+        <a href="#" id="requests_menu_item">Requests</a>
+      </li>
+    </ul>
+  </div>
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+      <%= yield %>
+    </div>
+  </div>
+</div>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
-
-  <body>
-    <%= yield %>
-  </body>
-</html>
+<script>
+  $("#menu-toggle").click(function(e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+    $("#toggle_button").toggleClass("toggled");
+  });
+</script>

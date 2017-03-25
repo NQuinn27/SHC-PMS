@@ -120,3 +120,272 @@ body
   display: -webkit-box
   -webkit-box-pack: center
   -webkit-box-align: center
+
+#material_head
+  background-color: $material_color
+  height: 150px
+  width: 100%
+  margin: 0
+  padding: 0
+  position: fixed
+
+#material_menu
+  width: 20%
+  height: 100%
+  background-color: $material_color
+
+#content
+  border-radius: 10px
+  border-style: solid
+  border-color: #C0C0C0
+  border-width: 1px
+  background-color: white
+  width: 80%
+  height: 500px
+  width: 80%
+  padding: 0
+  position: absolute
+  top: 200px
+  left: 10%
+  overflow: hidden
+  height: 100%
+
+#wrapper
+  padding-left: 0px
+  -webkit-transition: all 0.5s ease
+  -moz-transition: all 0.5s ease
+  -o-transition: all 0.5s ease
+  transition: all 0.5s ease
+  margin: 0
+  padding: 0
+
+.container-fluid
+  -webkit-box-shadow: 0px 0px 17px 6px rgba(192,192,192,1)
+  -moz-box-shadow: 0px 0px 17px 6px rgba(192,192,192,1)
+  box-shadow: 0px 0px 17px 6px rgba(192,192,192,1)
+
+#wrapper.toggled
+  padding-left: 250px
+
+#sidebar-wrapper
+  z-index: 1000
+  position: fixed
+  left: 250px
+  width: 0
+  height: 100%
+  margin-left: -250px
+  overflow-y: auto
+  background: white
+  -webkit-transition: all 0.5s ease
+  -moz-transition: all 0.5s ease
+  -o-transition: all 0.5s ease
+  transition: all 0.5s ease
+  box-shadow: inset 0 7px 6px -7px #767676 !important
+
+#wrapper.toggled #sidebar-wrapper
+  width: 250px
+
+#page-content-wrapper
+  width: 100%
+  position: absolute
+  padding: 15px
+  height: calc(100% - 90px)
+
+#wrapper.toggled #page-content-wrapper
+  position: absolute
+  margin-right: -250px
+
+/* Sidebar Styles */
+
+.sidebar-nav
+  position: absolute
+  top: 0
+  width: 250px
+  margin: 0
+  padding: 0
+  list-style: none
+  li
+    text-indent: 20px
+    line-height: 70px
+
+  li a
+    display: block
+    text-decoration: none
+    color: #5c5c5c
+    font-size: 16px
+    text-align: center
+
+  li a:hover
+    text-decoration: none
+    color: #5c5c5c
+    background: #DEDEDE
+
+  li a:active,
+  i a:focus
+    text-decoration: none
+
+  li a.active
+    border-left: 10px solid $material_color_dark
+    background: #DEDEDE
+
+  > .sidebar-brand
+    height: 65px
+    font-size: 18px
+    line-height: 60px
+
+  > .sidebar-brand a
+    color: #999999
+
+  > .sidebar-brand a:hover
+    color: #fff
+    background: none
+
+#wrapper
+  padding-left: 250px
+  .toggled
+    padding-left: 0
+
+#sidebar-wrapper
+  width: 250px
+
+#wrapper.toggled #sidebar-wrapper
+  width: 0
+
+#page-content-wrapper
+  padding: 20px
+  position: relative
+
+#wrapper.toggled #page-content-wrapper
+  position: relative
+  margin-right: 0
+
+#toggle_button
+  position: fixed
+  z-index: 99 !important
+
+#toggle_button.toggled
+  display:none
+
+#page-content-wrapper
+  box-shadow: inset 7px 7px 6px -7px #767676 !important
+  min-width: 550px
+
+.container-fluid
+  padding: 0
+  border-top-left-radius: 5px
+  border-top-right-radius: 5px
+
+#navbar
+  background-color: $material_color_dark
+  border:none
+  height: 90px
+  padding: 20px
+  .navbar-brand
+    color: white !important
+    padding-top: 0px
+
+  a
+    color: white !important
+    padding: 0
+
+  li
+    color: white !important
+    padding-top: 15px
+    padding-right: 7.5px
+    padding-left: 1.5px
+
+  li.divider
+    width: 2px
+    padding-top: 24px
+    margin-top: 4px
+    // margin-left: 25px;
+    margin-right: 10px
+    border-right: 1px solid white
+    height: 35px
+    right: 0
+    top: 10px
+
+  .logout
+    text-decoration: underline !important
+
+
+.posts_button
+  background-color: orange
+
+#ch-title
+  width: 90%
+  float: left
+
+#ch-button
+  width: 10%
+  margin: 0
+  padding: 0
+  float: left
+  vertical-align: center
+  button
+    width: 100%
+    margin: 5px
+    color: black
+    background-color: white
+
+#content_head
+  background-color: $material_color_dark
+  width: 100%
+  height: 70px
+  margin: 0
+  top: 0
+  padding: 15px
+  border-top-left-radius: 5px
+  border-top-right-radius: 5px
+  h1
+    margin: 0
+    color: white
+
+#content_body
+  background-color: white
+  width: 100%
+  clear: both
+
+.posts_head
+  background: #9d9d9d
+  td
+    height: 10px
+    text-align: center
+
+  th
+    border: 0
+    border-right: 1px solid white
+    border-left: 1px solid white
+    text-align: center
+    font-size: 8pt
+    height: 5px
+
+.posts_body
+  tbody
+    background-color: white
+
+  tr
+    background: white
+
+  td
+    text-align: left
+
+  td.alternate
+    background: #f8f8f8
+
+  td.button_cell
+    text-align: center
+
+span.glyphicon-trash
+  color: #E42922
+
+span.glyphicon-plus-sign
+  color: #289C3E
+
+span.glyphicon-edit
+  color: #3068F5
+
+.form-horizontal
+  .col-sm-9
+    padding-right: 25px
+    margin-top: 5px

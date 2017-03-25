@@ -1,10 +1,12 @@
 class PatientsController < ApplicationController
   before_action :set_patient, only: [:show, :edit, :update, :destroy]
-
+  helper_method :sort_column, :sort_direction
   # GET /patients
   # GET /patients.json
   def index
-    @patients = Patient.all
+    @patients = Patient.order(sort_column + ' ' + sort_direction)
+    @glyphicon = sort_direction == "asc" ? "glyphicon-chevron-down" : "glyphicon-chevron-up"
+    @sorting_by = sort_column
   end
 
   # GET /patients/1
@@ -25,7 +27,8 @@ class PatientsController < ApplicationController
   # POST /patients.json
   def create
     @patient = Patient.new(patient_params)
-
+    @patient.first_name = @patient.first_name.downcase
+    @patient.lastt_name = @patient.last_name.downcase
     respond_to do |format|
       if @patient.save
         format.html { redirect_to @patient, notice: 'Patient was successfully created.' }
@@ -70,5 +73,13 @@ class PatientsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def patient_params
       params.require(:patient).permit(:first_name, :last_name, :date_of_birth, :address, :phone_number, :notes, :allergies)
+    end
+
+    def sort_column
+      params[:sort] || "last_name"
+    end
+
+    def sort_direction
+      params[:direction] || "asc"
     end
 end

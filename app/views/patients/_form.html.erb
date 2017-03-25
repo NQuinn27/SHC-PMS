@@ -1,52 +1,35 @@
-<%= form_for(patient) do |f| %>
-  <% if patient.errors.any? %>
+<%= simple_form_for @patient, html: { class: 'form-horizontal' },
+  wrapper: :horizontal_form,
+  wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean,
+    date: :horizontal_form
+  } do |f| %>
+  <% if @patient.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(patient.errors.count, "error") %> prohibited this patient from being saved:</h2>
 
       <ul>
-      <% patient.errors.full_messages.each do |message| %>
+      <% @patient.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
     </div>
   <% end %>
+  <%= f.input :first_name%>
+  <%= f.input :last_name %>
+  <%= f.input :date_of_birth, as: :date, start_year: Date.today.year - 90,
+                                end_year: Date.today.year - 12,
+                                order: [:day, :month, :year] %>
+  <%= f.input :address %>
+  <%= f.input :phone_number %>
+  <%= f.input :notes %>
+  <%= f.input :allergies %>
+  <%= f.button :submit %>
+  <br>
 
-  <div class="field">
-    <%= f.label :first_name %>
-    <%= f.text_field :first_name %>
-  </div>
-
-  <div class="field">
-    <%= f.label :last_name %>
-    <%= f.text_field :last_name %>
-  </div>
-
-  <div class="field">
-    <%= f.label :date_of_birth %>
-    <%= f.date_select :date_of_birth %>
-  </div>
-
-  <div class="field">
-    <%= f.label :address %>
-    <%= f.text_area :address %>
-  </div>
-
-  <div class="field">
-    <%= f.label :phone_number %>
-    <%= f.text_field :phone_number %>
-  </div>
-
-  <div class="field">
-    <%= f.label :notes %>
-    <%= f.text_area :notes %>
-  </div>
-
-  <div class="field">
-    <%= f.label :allergies %>
-    <%= f.text_area :allergies %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>
+
+

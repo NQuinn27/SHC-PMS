@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  patient: one
+  condition: one
+  date_reported: 2017-03-17
+  date_cured: 2017-03-17
+  doctor: one
+
+two:
+  patient: two
+  condition: two
+  date_reported: 2017-03-17
+  date_cured: 2017-03-17
+  doctor: two

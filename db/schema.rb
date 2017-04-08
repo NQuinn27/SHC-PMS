@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170408102435) do
+ActiveRecord::Schema.define(version: 20170408105653) do
 
   create_table "conditions", force: :cascade do |t|
     t.text "description"
@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(version: 20170408102435) do
     t.integer "doctor_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "Icd10_id"
+    t.index ["Icd10_id"], name: "index_patient_conditions_on_Icd10_id"
     t.index ["condition_id"], name: "index_patient_conditions_on_condition_id"
     t.index ["doctor_id"], name: "index_patient_conditions_on_doctor_id"
     t.index ["patient_id"], name: "index_patient_conditions_on_patient_id"

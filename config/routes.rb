@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :icd10s
   resources :patients
   devise_for :users, :controllers => {
     sessions: 'users/sessions',

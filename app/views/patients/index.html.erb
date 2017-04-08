@@ -60,6 +60,9 @@
         <% end %>
       </tbody>
     </table>
+    <div class="flickr_pagination">
+      <%= will_paginate @patients, :container => false %>
+    </div>
   </div>
 </div>
 

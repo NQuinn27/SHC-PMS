@@ -7,11 +7,13 @@ class PatientsController < ApplicationController
     @patients = Patient.all
     if params[:search]
       @patients = Patient.search(params[:search]).order(sort_column + ' ' + sort_direction)
+      @patients = @patients.paginate(:page => params[:page], :per_page => 30).order(sort_column + ' ' + sort_direction)
     else
-      @patients = Patient.order(sort_column + ' ' + sort_direction)
+      @patients = Patient.all.paginate(:page => params[:page], :per_page => 30).order(sort_column + ' ' + sort_direction)
     end
     @glyphicon = sort_direction == "asc" ? "glyphicon-chevron-down" : "glyphicon-chevron-up"
     @sorting_by = sort_column
+    puts @patients.count
   end
 
   # GET /patients/1

@@ -9,7 +9,10 @@
     </a>
   </div>
 </div>
-
+<%= form_tag(patients_path, :method => "get", id: "search-form", :remote => true) do %>
+  <%= text_field_tag :search, params[:search], autofocus: true, placeholder: "Search Patients", :onchange => 'this.form.submit()', :autocomplete => :off %>
+  <%= submit_tag "Search" %>
+<% end %>
 <div class="row">
   <div class="col-md-12">
     <table class="table">
@@ -62,5 +65,7 @@
 
 
 <script type="text/javascript">
-$("#patients_menu_item").toggleClass("active")
+// $("#search-form").keyup( function(){
+//   this.submit();
+// });
 </script>

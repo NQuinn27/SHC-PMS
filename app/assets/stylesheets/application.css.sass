@@ -494,3 +494,44 @@ span.glyphicon-edit
     margin-right: 1em
   .next_page
     margin-left: 1em
+
+.glyphicon.spinning
+  animation: spin 1s infinite linear
+  -webkit-animation: spin2 1s infinite linear
+
+@keyframes spin
+  from
+    transform: scale(1) rotate(0deg)
+  to
+    transform: scale(1) rotate(360deg)
+
+@-webkit-keyframes spin2
+  from
+    -webkit-transform: rotate(0deg)
+  to
+    -webkit-transform: rotate(360deg)
+
+#exTab1 .tab-content
+  color : white
+  background-color: #428bca
+  padding : 5px 15px
+
+#exTab2 h3
+  color : white
+  background-color: #428bca
+  padding : 5px 15px
+
+/* remove border radius for the tab */
+
+#exTab1 .nav-pills > li > a
+  border-radius: 0
+
+/* change border radius for the tab , apply corners on top*/
+
+#exTab3 .nav-pills > li > a
+  border-radius: 4px 4px 0 0
+
+#exTab3 .tab-content
+  color : white
+  background-color: #428bca
+  padding : 5px 15px

@@ -1,39 +1,183 @@
-<p id="notice"><%= notice %></p>
+<%= flash_messages %>
+<div id="content_head">
+  <div id="ch-title">
+    <h1><%= @patient.first_name.titleize %> <%= @patient.last_name.titleize %></h1>
+  </div>
+</div>
 
-<p>
-  <strong>First name:</strong>
-  <%= @patient.first_name %>
-</p>
+<div class="row">
+  <div class="col-md-12">
+    <div class="col-md-3 col-lg-3 "> <img alt="User Pic" src="<%= image_path("man_avatar")%>" class="img-circle img-responsive"> </div>
+    <div class=" col-md-9 col-lg-9 ">
+      <table class="table">
+        <tbody>
+          <tr>
+            <td>
+              <strong>Date of birth</strong>
+            </td>
+            <td><%= @patient.date_of_birth %></td>
+          </tr>
 
-<p>
-  <strong>Last name:</strong>
-  <%= @patient.last_name %>
-</p>
+          <tr>
+            <td>
+              <strong>Address</strong>
+            </td>
+            <td>
+              <%= @patient.address %>
+            </td>
+          </tr>
 
-<p>
-  <strong>Date of birth:</strong>
-  <%= @patient.date_of_birth %>
-</p>
+          <tr>
+            <td>
+              <strong>Phone number:</strong>
+            </td>
+            <td>
+              <%= @patient.phone_number %>
+            </td>
+          </tr>
 
-<p>
-  <strong>Address:</strong>
-  <%= @patient.address %>
-</p>
+          <tr>
+            <td>
+              <strong>Notes:</strong>
+            </td>
+            <td>
+              <%= @patient.notes %>
+            </td>
+          </tr>
 
-<p>
-  <strong>Phone number:</strong>
-  <%= @patient.phone_number %>
-</p>
+          <tr>
+            <td>
+              <strong>Allergies:</strong>
+            </td>
+            <td>
+              <%= @patient.allergies %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="panel-footer">
+      <a href="<%= edit_patient_path(@patient) %>" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+      <%= link_to "<span class=\"glyphicon glyphicon-trash\"></span>".html_safe, patient_path(@patient), data: {:confirm => 'Are you sure?'}, :method => :delete %>
+    </div>
+    <% if current_user.doctor.present? %>
+      <%= link_to "Add Condition", new_patient_condition_path(:patient_id => @patient.id, :doctor_id => current_user.doctor.id), class: "btn btn-primary" %>
+      <%= link_to "Add Appointment", new_appointment_path(:patient_id => @patient.id, :doctor_id => current_user.doctor.id), class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <% if @current_conditions.count > 0 %>
+      <div class="row">
+        <div class="col-md-12">
+          <h1>Current Conditions</h1>
+          <table class="table">
+            <thead class="posts_head">
+              <tr>
+                <th>
+                  Code
+                </th>
+                <th>
+                  Description
+                </th>
+                <th>
+                  Additional
+                </th>
+                <th>
+                  Reported
+                </th>
+                <th>
+                  Notes
+                </th>
+                <th>
+                  Reporting Doctor
+                </th>
+                <th colspan="3"></th>
+              </tr>
+            </thead>
+            <tbody class="posts_body">
+              <% @current_conditions.each do |condition| %>
+                <tr>
+                  <td><%= condition.icd10.code %></td>
+                  <td><%= condition.icd10.description %></td>
+                  <td><%= condition.icd10.additional %></td>
+                  <td><%= condition.reported %></td>
+                  <td><%= condition.notes %></td>
+                  <td><%= condition.doctor.first_name + " " + condition.doctor.last_name %></td>
+                  <td><a class="btn btn-large btn-default" href="http://localhost:3000/patient_condition/<%= condition.id %>/cure">Mark Cured</a></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <% if @past_conditions.count > 0 %>
+      <div class="row">
+        <div class="col-md-12">
+          <h1>Past Conditions</h1>
+          <table class="table">
+            <thead class="posts_head">
+              <tr>
+                <th>
+                  Code
+                </th>
+                <th>
+                  Description
+                </th>
+                <th>
+                  Additional
+                </th>
+                <th>
+                  Reported
+                </th>
+                <th>
+                  Cured
+                </th>
+                <th>
+                  Notes
+                </th>
+                <th>
+                  Reporting Doctor
+                </th>
+                <th colspan="3"></th>
+              </tr>
+            </thead>
+            <tbody class="posts_body">
+              <% @past_conditions.each do |condition| %>
+                <tr>
+                  <td><%= condition.icd10.code %></td>
+                  <td><%= condition.icd10.description %></td>
+                  <td><%= condition.icd10.additional %></td>
+                  <td><%= condition.reported %></td>
+                  <td><%= condition.cured %></td>
+                  <td><%= condition.notes %></td>
+                  <td><%= condition.doctor.first_name + " " + condition.doctor.last_name %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
 
-<p>
-  <strong>Notes:</strong>
-  <%= @patient.notes %>
-</p>
-
-<p>
-  <strong>Allergies:</strong>
-  <%= @patient.allergies %>
-</p>
-
-<%= link_to 'Edit', edit_patient_path(@patient) %> |
-<%= link_to 'Back', patients_path %>
+<script type="text/javascript">
+  function cure(id) {
+    console.log("Here");
+    const sendpoint = `http://localhost:3000/patient_condition/${id}/cure`;
+    console.log(sendpoint);
+    $.ajax({ url: sendpoint,
+      type: 'POST',
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      success: function(response) {
+      }
+    });
+  }
+</script>

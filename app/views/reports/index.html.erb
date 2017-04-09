@@ -1,0 +1,351 @@
+
+<div id="tab" class="container">
+<ul  class="nav nav-pills">
+      <% if @doctor_open_conditions %>
+        <li class="active">
+          <a  href="#1a" data-toggle="tab">My Open Conditions</a>
+        </li>
+      <% end %>
+      <% if @doctor_closed_conditions %>
+        <li>
+          <a href="#2a" data-toggle="tab">My Past Conditions</a>
+        </li>
+      <% end %>
+      <% if @doctor_appointments %>
+        <li>
+          <a href="#3a" data-toggle="tab">My Appointments</a>
+        </li>
+      <% end %>
+      <% if @open_conditions %>
+        <li>
+          <a  href="#4a" data-toggle="tab">All Open Conditions</a>
+        </li>
+      <% end %>
+      <% if @closed_conditions %>
+        <li>
+          <a href="#5a" data-toggle="tab">All Past Conditions</a>
+        </li>
+      <% end %>
+      <% if @appointments %>
+        <li>
+          <a href="#6a" data-toggle="tab">All Appointments</a>
+        </li>
+      <% end %>
+    </ul>
+      <div class="tab-content clearfix">
+        <% if @doctor_open_conditions %>
+          <div class="tab-pane active" id="1a">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h1>My Open Conditions</h1>
+                    <%= form_tag('reports', :method => "get", id: "search-form", :remote => true) do %>
+                      <%= text_field_tag :search_doctor_open_conditions, params[:search_doctor_open_conditions], autofocus: true, placeholder: "Search Conditions", :onchange => 'this.form.submit()', :autocomplete => :off %>
+                      <%= submit_tag "Search", :class => "btn btn-default" %>
+                    <% end %>
+                    <table class="table">
+                      <thead class="posts_head">
+                        <tr>
+                          <th>
+                            Code
+                          </th>
+                          <th>
+                            Description
+                          </th>
+                          <th>
+                            Additional
+                          </th>
+                          <th>
+                            Reported
+                          </th>
+                          <th>
+                            Notes
+                          </th>
+                          <th>
+                            Reporting Doctor
+                          </th>
+                          <th colspan="3"></th>
+                        </tr>
+                      </thead>
+                      <tbody class="posts_body">
+                        <% @doctor_open_conditions.each do |condition| %>
+                          <tr>
+                            <td><%= condition.icd10.code %></td>
+                            <td><%= condition.icd10.description %></td>
+                            <td><%= condition.icd10.additional %></td>
+                            <td><%= condition.reported %></td>
+                            <td><%= condition.notes %></td>
+                            <td><%= condition.doctor.first_name + " " + condition.doctor.last_name %></td>
+                            <td><a class="btn btn-large btn-default" href="http://localhost:3000/patient_condition/<%= condition.id %>/cure">Mark Cured</a></td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <% if @doctor_closed_conditions %>
+          <div class="tab-pane" id="2a">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h1>My Past Conditions</h1>
+                    <%= form_tag('reports', :method => "get", id: "search-form-2", :remote => true) do %>
+                      <%= text_field_tag :search_doctor_closed_conditions, params[:search_doctor_closed_conditions], autofocus: true, placeholder: "Search Conditions", :onchange => 'this.form.submit()', :autocomplete => :off %>
+                      <%= submit_tag "Search", :class => "btn btn-default" %>
+                    <% end %>
+                    <table class="table">
+                      <thead class="posts_head">
+                        <tr>
+                          <th>
+                            Code
+                          </th>
+                          <th>
+                            Description
+                          </th>
+                          <th>
+                            Additional
+                          </th>
+                          <th>
+                            Reported
+                          </th>
+                          <th>
+                            Cured
+                          </th>
+                          <th>
+                            Notes
+                          </th>
+                          <th>
+                            Reporting Doctor
+                          </th>
+                          <th colspan="3"></th>
+                        </tr>
+                      </thead>
+                      <tbody class="posts_body">
+                        <% @doctor_closed_conditions.each do |condition| %>
+                          <tr>
+                            <td><%= condition.icd10.code %></td>
+                            <td><%= condition.icd10.description %></td>
+                            <td><%= condition.icd10.additional %></td>
+                            <td><%= condition.reported %></td>
+                            <td><%= condition.cured %></td>
+                            <td><%= condition.notes %></td>
+                            <td><%= condition.doctor.first_name + " " + condition.doctor.last_name %></td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <% if @doctor_appointments %>
+          <div class="tab-pane" id="3a">
+            <div class="row">
+              <div class="col-md-12">
+                <h1>My Appointments</h1>
+                <table class="table">
+                  <thead class="posts_head">
+                    <tr>
+                      <th>Doctor</th>
+                      <th>Patient</th>
+                      <th>Date</th>
+                      <th>Notes</th>
+                      <th colspan="3"></th>
+                    </tr>
+                  </thead>
+                 <tbody class="posts_body">
+                   <% @doctor_appointments.each do |appointment| %>
+                     <tr>
+                       <td><%= appointment.doctor.first_name %></td>
+                       <td><%= link_to "#{appointment.patient.first_name} #{appointment.patient.last_name}", patient_path(appointment.patient) %></td>
+                       <td><%= appointment.date %></td>
+                       <td><%= appointment.notes %></td>
+                       <td><%= link_to 'Show', appointment %></td>
+                       <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
+                       <td><%= link_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                     </tr>
+                   <% end %>
+                 </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <% if @open_conditions %>
+          <div class="tab-pane" id="4a">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h1>Open Conditions</h1>
+                    <%= form_tag('reports', :method => "get", id: "search-form-3", :remote => true) do %>
+                      <%= text_field_tag :search_open_conditions, params[:search_open_conditions], autofocus: true, placeholder: "Search Conditions", :onchange => 'this.form.submit()', :autocomplete => :off %>
+                      <%= submit_tag "Search", :class => "btn btn-default" %>
+                    <% end %>
+                    <table class="table">
+                      <thead class="posts_head">
+                        <tr>
+                          <th>
+                            Code
+                          </th>
+                          <th>
+                            Description
+                          </th>
+                          <th>
+                            Additional
+                          </th>
+                          <th>
+                            Reported
+                          </th>
+                          <th>
+                            Notes
+                          </th>
+                          <th>
+                            Reporting Doctor
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody class="posts_body">
+                        <% @open_conditions.each do |condition| %>
+                          <tr>
+                            <td><%= condition.icd10.code %></td>
+                            <td><%= condition.icd10.description %></td>
+                            <td><%= condition.icd10.additional %></td>
+                            <td><%= condition.reported %></td>
+                            <td><%= condition.notes %></td>
+                            <td><%= condition.doctor.first_name + " " + condition.doctor.last_name %></td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <% if @closed_conditions %>
+          <div class="tab-pane" id="5a">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h1>Closed Conditions</h1>
+                    <%= form_tag('reports', :method => "get", id: "search-form-3", :remote => true) do %>
+                      <%= text_field_tag :search_closed_conditions, params[:search_closed_conditions], autofocus: true, placeholder: "Search Conditions", :onchange => 'this.form.submit()', :autocomplete => :off %>
+                      <%= submit_tag "Search", :class => "btn btn-default" %>
+                    <% end %>
+                    <table class="table">
+                      <thead class="posts_head">
+                        <tr>
+                          <th>
+                            <%= sortable "code" %>
+                            <% if @sorting_by == "code" %>
+                              <div class="glyphicon <%= @glyphicon %>"></div>
+                            <% end %>
+                          </th>
+                          <th>
+                            Description
+                          </th>
+                          <th>
+                            Additional
+                          </th>
+                          <th>
+                            Reported
+                          </th>
+                          <th>
+                            Cured
+                          </th>
+                          <th>
+                            Notes
+                          </th>
+                          <th>
+                            Reporting Doctor
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody class="posts_body">
+                        <% @closed_conditions.each do |condition| %>
+                          <tr>
+                            <td><%= condition.icd10.code %></td>
+                            <td><%= condition.icd10.description %></td>
+                            <td><%= condition.icd10.additional %></td>
+                            <td><%= condition.reported %></td>
+                            <td><%= condition.cured %></td>
+                            <td><%= condition.notes %></td>
+                            <td><%= condition.doctor.first_name + " " + condition.doctor.last_name %></td>
+                          </tr>
+                        <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <% if @appointments %>
+          <div class="tab-pane" id="6a">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h1>All Appointments</h1>
+                    <table class="table">
+                      <thead class="posts_head">
+                        <tr>
+                          <th>Doctor</th>
+                          <th>Patient</th>
+                          <th>Date</th>
+                          <th>Notes</th>
+                          <th colspan="3"></th>
+                        </tr>
+                      </thead>
+                     <tbody class="posts_body">
+                       <% @appointments.each do |appointment| %>
+                         <tr>
+                           <td><%= appointment.doctor.first_name %></td>
+                           <td><%= link_to "#{appointment.patient.first_name} #{appointment.patient.last_name}", patient_path(appointment.patient) %></td>
+                           <td><%= appointment.date %></td>
+                           <td><%= appointment.notes %></td>
+                           <td><%= link_to 'Show', appointment %></td>
+                           <td><%= link_to 'Edit', edit_appointment_path(appointment) %></td>
+                           <td><%= link_to 'Destroy', appointment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                         </tr>
+                       <% end %>
+                     </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+  </div>
+
+
+<script type="text/javascript">
+  //Keep open last Tab
+  $(function() {
+      // for bootstrap 3 use 'shown.bs.tab', for bootstrap 2 use 'shown' in the next line
+      $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+          // save the latest tab; use cookies if you like 'em better:
+          localStorage.setItem('lastTab', $(this).attr('href'));
+      });
+
+      // go to the latest tab, if it exists:
+      var lastTab = localStorage.getItem('lastTab');
+      if (lastTab) {
+          $('[href="' + lastTab + '"]').tab('show');
+      }
+  });
+</script>

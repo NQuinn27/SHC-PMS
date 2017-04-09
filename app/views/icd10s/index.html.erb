@@ -4,14 +4,14 @@
     <h1>Conditions</h1>
   </div>
   <div id="ch-button">
-    <a href="<%= new_patient_path %>">
+    <a href="<%= new_icd10_path %>">
       <button class="btn btn-primary" type="button">Add Condition</button>
     </a>
   </div>
 </div>
-<%= form_tag('/list', remote: true) do %>
-  <input name='city_id' value='2'>
-  <input type='Submit'>
+<%= form_tag(icd10s_path, :method => "get", id: "search-form", :remote => true) do %>
+  <%= text_field_tag :search, params[:search], autofocus: true, placeholder: "Search Conditions", :onchange => 'this.form.submit()', :autocomplete => :off %>
+  <%= submit_tag "Search" %>
 <% end %>
 <div class="row">
   <div class="col-md-12">
@@ -19,10 +19,16 @@
       <thead class="posts_head">
         <tr>
           <th>
-            Code
+            <%= sortable "code" %>
+            <% if @sorting_by == "code" %>
+              <div class="glyphicon <%= @glyphicon %>"></div>
+            <% end %>
           </th>
           <th>
-            Description
+            <%= sortable "description" %>
+            <% if @sorting_by == "description" %>
+              <div class="glyphicon <%= @glyphicon %>"></div>
+            <% end %>
           </th>
           <th>
             Additional

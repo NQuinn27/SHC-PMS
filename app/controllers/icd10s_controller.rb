@@ -1,13 +1,28 @@
 class Icd10sController < ApplicationController
   before_action :set_icd10, only: [:show, :edit, :update, :destroy]
+  helper_method :sort_column, :sort_direction
+  respond_to :json
 
   # GET /icd10s
   # GET /icd10s.json
   def index
-    @icd10s = Icd10.all.paginate(:page => params[:page], :per_page => 30)
+    @icd10s = Icd10.all
+    @glyphicon = sort_direction == "asc" ? "glyphicon-chevron-down" : "glyphicon-chevron-up"
+    @sorting_by = sort_column
+    respond_to do |format|
+      if params[:search]
+        @icd10s = Icd10.search(params[:search]).order(sort_column + ' ' + sort_direction)
+        @icd10s = @icd10s.paginate(:page => params[:page], :per_page => 30).order(sort_column + ' ' + sort_direction)
+        # format.json {:json => @icd10s.to_json}
+        format.html {}
+        format.json { Icd10.search(params[:search]).to_json}
+      else
+        @icd10s = Icd10.all.paginate(:page => params[:page], :per_page => 30).order(sort_column + ' ' + sort_direction)
+        format.json { Icd10.all.to_json }
+        format.html {}
+      end
+    end
   end
-
-
 
   # GET /icd10s/1
   # GET /icd10s/1.json
@@ -71,6 +86,14 @@ class Icd10sController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def icd10_params
-      params.fetch(:icd10, {})
+      params.require(:icd10).permit(:code, :description, :additional)
+    end
+
+    def sort_column
+      params[:sort] || "code"
+    end
+
+    def sort_direction
+      params[:direction] || "asc"
     end
 end

@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :appointments
+  resources :patient_conditions
+  resources :hospitals
+  resources :doctors
   resources :icd10s
   resources :patients
   devise_for :users, :controllers => {
@@ -9,6 +13,9 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  get '/patient_condition/:id/cure', to: 'patient_conditions#cure'
+  get '/reports', to: 'reports#index'
 
   root 'patients#index'
 

@@ -1,0 +1,100 @@
+<div class="row">
+<div class="col-md-4">
+  <%= form_tag( { :action => 'create', method: :post }, :multipart => true ) %>
+    <% if @patient_condition.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(patient_condition.errors.count, "error") %> prohibited this condition from being saved:</h2>
+
+        <ul>
+        <% @patient_condition.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <% if @patient_condition.doctor_id.present? %>
+      <%= hidden_field "patient_condition", "doctor_id", "value" => @patient_condition.doctor_id %>
+    <% end %>
+    <% if @patient_condition.patient_id.present? %>
+      <%= hidden_field "patient_condition", "patient_id", "value" => @patient_condition.patient_id %>
+    <% end %>
+    <div class="form-inputs">
+      <div class="form-group date optional patient_condition_reported">
+        <label for="notes">Notes</label>
+        <div class="form-inline">
+          <%= text_area "patient_condition", "notes", "size" => 20 , "class" => "form-control optional"%>
+        </div>
+        <label for="icd10">Condition</label>
+        <div class="form-inline">
+          <%= hidden_field "patient_condition", "icd10_id", "class" => "form-control optional"%>
+          <a id="condition_label">Search on the right</a>
+        </div>
+      </div>
+      <%= submit_tag( "Create Patient Condition", :class => "btn btn-default" ) %>
+     </div>
+  </form>
+</div>
+<div class="col-md-6">
+  <h3>Choose Condition</h3>
+  <form class="search-form">
+    <input id="searchBox" type="text" class="search" placeholder="Code or Description">
+    <input type="button" onclick="search()" value="Search">
+  </form>
+  <div class="col-md-12">
+    <table class="suggestions table">
+      <tbody class="posts_body">
+        <tr>Filter for a condition</tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+<script type="text/javascript">
+
+  const endpoint = 'http://localhost:3000<%= icd10s_path %>.json';
+  console.log(endpoint);
+  var icd10s = [];
+
+  function search() {
+    icd10s = [];
+    const value = document.getElementById("searchBox").value;
+    const sendpoint = `http://localhost:3000<%= icd10s_path %>.json?search=${value}`;
+    console.log(sendpoint);
+    $.ajax({ url: sendpoint,
+      type: 'GET',
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      success: function(response) {
+        icd10s.push(...response);
+        const searchInput = document.querySelector('.spinner-loader');
+        const html = response.map((icd10, index) => {
+          console.log(icd10);
+          const code = icd10.code;
+          const description = icd10.description;
+          return `
+            <tr>
+              <td>${code}<td>
+              <td>${description}</td>
+              <td>${icd10.additional}</td>
+              <td><button id="selectButton" data-index=${index} onclick="select(${index})" >Select</button></td>
+            </tr>
+          `;
+        }).join('');
+        suggestions.innerHTML = html;
+      }
+    });
+  }
+
+  function select(index) {
+    const icd10 = icd10s[index];
+    const conditionLabel = document.querySelector('#condition_label');
+    conditionLabel.innerHTML = icd10.code + ":" + icd10.description;
+    const hiddenField = document.querySelector('#patient_condition_icd10_id');
+    hiddenField.value = icd10.id;
+  }
+
+  const suggestions = document.querySelector('.suggestions');
+
+
+
+</script>

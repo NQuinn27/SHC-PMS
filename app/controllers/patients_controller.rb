@@ -1,6 +1,7 @@
+require 'date'
 class PatientsController < ApplicationController
   before_action :set_patient, only: [:show, :edit, :update, :destroy]
-  helper_method :sort_column, :sort_direction
+  helper_method :sort_column, :sort_direction, :sort_column_conditions
   # GET /patients
   # GET /patients.json
   def index
@@ -13,12 +14,20 @@ class PatientsController < ApplicationController
     end
     @glyphicon = sort_direction == "asc" ? "glyphicon-chevron-down" : "glyphicon-chevron-up"
     @sorting_by = sort_column
-    puts @patients.count
   end
 
   # GET /patients/1
   # GET /patients/1.json
   def show
+    @patient_condition = PatientCondition.new
+    @patient_condition.patient = @patient
+    if current_user.doctor.present?
+      @patient_condition.doctor = current_user.doctor
+    end
+    @patient_condition.reported = Date.today
+
+    @current_conditions = PatientCondition.where(:patient => @patient, :cured => nil)
+    @past_conditions = PatientCondition.where(:patient => @patient).where.not(:cured => nil)
   end
 
   # GET /patients/new
@@ -84,6 +93,14 @@ class PatientsController < ApplicationController
 
     def sort_column
       params[:sort] || "last_name"
+    end
+
+    def sort_direction
+      params[:direction] || "asc"
+    end
+
+    def sort_column_conditions
+      params[:sort] || "code"
     end
 
     def sort_direction

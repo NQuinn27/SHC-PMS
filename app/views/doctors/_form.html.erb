@@ -1,0 +1,34 @@
+<%= simple_form_for @doctor, html: { class: 'form-horizontal' },
+  wrapper: :horizontal_form,
+  wrapper_mappings: {
+    check_boxes: :horizontal_radio_and_checkboxes,
+    radio_buttons: :horizontal_radio_and_checkboxes,
+    file: :horizontal_file_input,
+    boolean: :horizontal_boolean,
+    date: :horizontal_form
+  } do |f| %>
+  <% if @doctor.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(doctor.errors.count, "error") %> prohibited this doctor from being saved:</h2>
+
+      <ul>
+      <% @doctor.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.input :first_name %>
+  <%= f.input :last_name %>
+  <%= f.input :qualifications %>
+  <%= f.input :hospital %>
+  <%= f.input :phone_office %>
+  <%= f.input :phone_mobile %>
+  <%= f.input :date_of_birth %>
+  <%= f.input :user_email, as: :string %>
+  <%= f.input :user_password, as: :password %>
+  <%= f.input :user_password_confirmation, as: :password %>
+  <%= f.button :submit %>
+  <br>
+
+<% end %>

@@ -12,9 +12,12 @@
 
 ActiveRecord::Schema.define(version: 20170409132009) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "appointments", force: :cascade do |t|
-    t.integer "doctor_id"
-    t.integer "patient_id"
+    t.bigint "doctor_id"
+    t.bigint "patient_id"
     t.date "date"
     t.text "notes"
     t.datetime "created_at", null: false
@@ -35,7 +38,7 @@ ActiveRecord::Schema.define(version: 20170409132009) do
     t.string "last_name"
     t.text "qualifications"
     t.string "hospital"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "phone_office"
@@ -54,15 +57,15 @@ ActiveRecord::Schema.define(version: 20170409132009) do
   end
 
   create_table "patient_conditions", force: :cascade do |t|
-    t.integer "patient_id"
-    t.integer "doctor_id"
+    t.bigint "patient_id"
+    t.bigint "doctor_id"
     t.date "reported"
     t.date "cured"
     t.text "notes"
-    t.integer "condition_id"
+    t.bigint "condition_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "icd10_id"
+    t.bigint "icd10_id"
     t.index ["condition_id"], name: "index_patient_conditions_on_condition_id"
     t.index ["doctor_id"], name: "index_patient_conditions_on_doctor_id"
     t.index ["icd10_id"], name: "index_patient_conditions_on_icd10_id"
@@ -99,4 +102,11 @@ ActiveRecord::Schema.define(version: 20170409132009) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "appointments", "doctors"
+  add_foreign_key "appointments", "patients"
+  add_foreign_key "doctors", "users"
+  add_foreign_key "patient_conditions", "conditions"
+  add_foreign_key "patient_conditions", "doctors"
+  add_foreign_key "patient_conditions", "icd10s"
+  add_foreign_key "patient_conditions", "patients"
 end

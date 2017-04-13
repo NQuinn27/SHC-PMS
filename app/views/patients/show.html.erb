@@ -68,7 +68,7 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <% if @current_conditions.count > 0 %>
+    <% if @presenter.current_conditions.count > 0 %>
       <div class="row">
         <div class="col-md-12">
           <h1>Current Conditions</h1>
@@ -97,7 +97,7 @@
               </tr>
             </thead>
             <tbody class="posts_body">
-              <% @current_conditions.each do |condition| %>
+              <% @presenter.current_conditions.each do |condition| %>
                 <tr>
                   <td><%= condition.icd10.code %></td>
                   <td><%= condition.icd10.description %></td>
@@ -117,7 +117,7 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <% if @past_conditions.count > 0 %>
+    <% if @presenter.past_conditions.count > 0 %>
       <div class="row">
         <div class="col-md-12">
           <h1>Past Conditions</h1>
@@ -149,7 +149,7 @@
               </tr>
             </thead>
             <tbody class="posts_body">
-              <% @past_conditions.each do |condition| %>
+              <% @presenter.past_conditions.each do |condition| %>
                 <tr>
                   <td><%= condition.icd10.code %></td>
                   <td><%= condition.icd10.description %></td>

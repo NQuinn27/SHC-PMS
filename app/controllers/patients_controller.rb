@@ -1,5 +1,6 @@
 require 'date'
 class PatientsController < ApplicationController
+
   before_action :set_patient, only: [:show, :edit, :update, :destroy]
   helper_method :sort_column, :sort_direction, :sort_column_conditions
   # GET /patients
@@ -12,8 +13,7 @@ class PatientsController < ApplicationController
     else
       @patients = Patient.all.paginate(:page => params[:page], :per_page => 30).order(sort_column + ' ' + sort_direction)
     end
-    @glyphicon = sort_direction == "asc" ? "glyphicon-chevron-down" : "glyphicon-chevron-up"
-    @sorting_by = sort_column
+    @presenter = Patients::IndexPresenter.new(sort_direction, sort_column)
   end
 
   # GET /patients/1
@@ -26,8 +26,7 @@ class PatientsController < ApplicationController
     end
     @patient_condition.reported = Date.today
 
-    @current_conditions = PatientCondition.where(:patient => @patient, :cured => nil)
-    @past_conditions = PatientCondition.where(:patient => @patient).where.not(:cured => nil)
+    @presenter = Patients::ShowPresenter.new(@patient)
   end
 
   # GET /patients/new

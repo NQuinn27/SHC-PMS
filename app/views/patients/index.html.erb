@@ -20,20 +20,20 @@
         <tr>
           <th>
             <%= sortable "last_name" %>
-            <% if @sorting_by == "last_name" %>
-              <div class="glyphicon <%= @glyphicon %>"></div>
+            <% if @presenter.sorting_by == "last_name" %>
+              <div class="glyphicon <%= @presenter.glyphicon %>"></div>
             <% end %>
           </th>
           <th>
             <%= sortable "first_name" %>
-            <% if @sorting_by == "first_name" %>
-              <div class="glyphicon <%= @glyphicon %>"></div>
+            <% if @presenter.sorting_by == "first_name" %>
+              <div class="glyphicon <%= @presenter.glyphicon %>"></div>
             <% end %>
           </th>
           <th>
             <%= sortable "date_of_birth" %>
-            <% if @sorting_by == "date_of_birth" %>
-              <div class="glyphicon <%= @glyphicon %>"></div>
+            <% if @presenter.sorting_by == "date_of_birth" %>
+              <div class="glyphicon <%= @presenter.glyphicon %>"></div>
             <% end %>
           </th>
           <th>Address</th>

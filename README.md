@@ -1,24 +1,14 @@
-# README
+# Cloud Application Development
+# NCI BSCHE4 Project
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Brief
+The aim of this project is to create a smart patient management system.
 
-Things you may want to cover:
+## Database
+The system uses a Postgres database (as is deployed to heroku). Setup:
+rake db:create
+rake db:migrate
+rake db:seed
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Login
+Check the top of seeds.rb file for some logins

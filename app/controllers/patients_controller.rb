@@ -90,10 +90,12 @@ class PatientsController < ApplicationController
       params.require(:patient).permit(:first_name, :last_name, :date_of_birth, :address, :phone_number, :notes, :allergies)
     end
 
+    #The sorting column. Default to last_name
     def sort_column
       params[:sort] || "last_name"
     end
 
+    #The sort direction. Default to ascending
     def sort_direction
       params[:direction] || "asc"
     end

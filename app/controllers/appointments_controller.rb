@@ -4,6 +4,7 @@ class AppointmentsController < ApplicationController
   # GET /appointments
   # GET /appointments.json
   def index
+    #return all appointments
     @appointments = Appointment.all
   end
 
@@ -16,9 +17,11 @@ class AppointmentsController < ApplicationController
   def new
     @appointment = Appointment.new
     if params[:doctor_id]
+      #set the Doctor ID for the appointment
       @appointment.doctor_id = params[:doctor_id]
     end
     if params[:patient_id]
+      #set the patient ID for the appointment
       @appointment.patient_id = params[:patient_id]
     end
   end

@@ -1,32 +1,32 @@
 
 <div id="tab" class="container">
 <ul  class="nav nav-pills">
-      <% if @doctor_open_conditions %>
+      <% if @presenter.doctor_open_conditions %>
         <li class="active">
           <a  href="#1a" data-toggle="tab">My Open Conditions</a>
         </li>
       <% end %>
-      <% if @doctor_closed_conditions %>
+      <% if @presenter.doctor_closed_conditions %>
         <li>
           <a href="#2a" data-toggle="tab">My Past Conditions</a>
         </li>
       <% end %>
-      <% if @doctor_appointments %>
+      <% if @presenter.doctor_appointments %>
         <li>
           <a href="#3a" data-toggle="tab">My Appointments</a>
         </li>
       <% end %>
-      <% if @open_conditions %>
+      <% if @presenter.open_conditions %>
         <li>
           <a  href="#4a" data-toggle="tab">All Open Conditions</a>
         </li>
       <% end %>
-      <% if @closed_conditions %>
+      <% if @presenter.closed_conditions %>
         <li>
           <a href="#5a" data-toggle="tab">All Past Conditions</a>
         </li>
       <% end %>
-      <% if @appointments %>
+      <% if @presenter.appointments %>
         <li>
           <a href="#6a" data-toggle="tab">All Appointments</a>
         </li>
@@ -58,4 +58,6 @@
           $('[href="' + lastTab + '"]').tab('show');
       }
   });
+  $("#reports_menu_item").toggleClass("active")
 </script>
+

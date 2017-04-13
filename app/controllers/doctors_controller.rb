@@ -5,6 +5,7 @@ class DoctorsController < ApplicationController
   # GET /doctors
   # GET /doctors.json
   def index
+    #return all of the doctors in the database
     @doctors = Doctor.all.paginate(:page => params[:page], :per_page => 30)
   end
 
@@ -25,6 +26,7 @@ class DoctorsController < ApplicationController
   # POST /doctors
   # POST /doctors.json
   def create
+    #Must create a Devise User for the doctor to sign in
     user = User.new(:email => params[:doctor][:user_email], :password => params[:doctor][:user_password], :password_confirmation => params[:doctor][:user_password_confirmation], :admin => false)
     user.save!
     @doctor = Doctor.new(doctor_params)

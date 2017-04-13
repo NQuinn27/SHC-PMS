@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   resources :appointments
   resources :patient_conditions
-  resources :hospitals
   resources :doctors
   resources :icd10s
   resources :patients

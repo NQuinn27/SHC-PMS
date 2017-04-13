@@ -1,4 +1,4 @@
-<% if @doctor_appointments %>
+<% if @presenter.doctor_appointments %>
   <div class="tab-pane" id="3a">
     <div class="row">
       <div class="col-md-12">
@@ -14,7 +14,7 @@
             </tr>
           </thead>
          <tbody class="posts_body">
-           <% @doctor_appointments.each do |appointment| %>
+           <% @presenter.doctor_appointments.each do |appointment| %>
              <tr>
                <td><%= appointment.doctor.first_name %></td>
                <td><%= link_to "#{appointment.patient.first_name} #{appointment.patient.last_name}", patient_path(appointment.patient) %></td>

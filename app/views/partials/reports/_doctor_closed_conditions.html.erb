@@ -1,4 +1,4 @@
-<% if @doctor_closed_conditions %>
+<% if @presenter.doctor_closed_conditions %>
   <div class="tab-pane" id="2a">
     <div class="row">
       <div class="col-md-12">
@@ -37,7 +37,7 @@
                 </tr>
               </thead>
               <tbody class="posts_body">
-                <% @doctor_closed_conditions.each do |condition| %>
+                <% @presenter.doctor_closed_conditions.each do |condition| %>
                   <tr>
                     <td><%= condition.icd10.code %></td>
                     <td><%= condition.icd10.description %></td>

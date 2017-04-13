@@ -10,10 +10,10 @@
         <a href="<%= icd10s_path %>" id="condtitions_menu_item">ICD10 Conditions</a>
       </li>
       <li>
-        <a href="<%= appointments_path %>" id="requests_menu_item">Appointments</a>
+        <a href="<%= appointments_path %>" id="appointments_menu_item">Appointments</a>
       </li>
       <li>
-        <a href="/reports" id="requests_menu_item">Reports</a>
+        <a href="/reports" id="reports_menu_item">Reports</a>
       </li>
       <% if current_user.admin? %>
         <li>
@@ -22,7 +22,7 @@
       <% end %>
       <% if current_user.doctor.present? %>
         <li>
-          <a href="<%= doctor_path(current_user.doctor.id) %>" id="doctors_menu_item">Profile</a>
+          <a href="<%= doctor_path(current_user.doctor.id) %>" id="profile_menu_item">Profile</a>
         </li>
       <% end %>
     </ul>

@@ -9,7 +9,10 @@ class Icd10sController < ApplicationController
     @icd10s = Icd10.all
     @glyphicon = sort_direction == "asc" ? "glyphicon-chevron-down" : "glyphicon-chevron-up"
     @sorting_by = sort_column
+
+    #respond to JSON for AJAX searching
     respond_to do |format|
+      #f searchingm return filtered results
       if params[:search]
         @icd10s = Icd10.search(params[:search]).order(sort_column + ' ' + sort_direction)
         @icd10s = @icd10s.paginate(:page => params[:page], :per_page => 30).order(sort_column + ' ' + sort_direction)

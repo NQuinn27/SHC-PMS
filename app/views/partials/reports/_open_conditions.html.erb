@@ -1,4 +1,4 @@
-<% if @open_conditions %>
+<% if @presenter.open_conditions %>
   <div class="tab-pane" id="4a">
     <div class="row">
       <div class="col-md-12">
@@ -33,7 +33,7 @@
                 </tr>
               </thead>
               <tbody class="posts_body">
-                <% @open_conditions.each do |condition| %>
+                <% @presenter.open_conditions.each do |condition| %>
                   <tr>
                     <td><%= condition.icd10.code %></td>
                     <td><%= condition.icd10.description %></td>

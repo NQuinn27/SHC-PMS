@@ -13,5 +13,9 @@ module Patients
     def past_conditions
       PatientCondition.where(:patient => @patient).where.not(:cured => nil)
     end
+
+    def future_appointments
+      Appointment.where(:patient => @patient).where("date > ?", Date.yesterday)
+    end
   end
 end

@@ -30,7 +30,7 @@ class ReportsController < ApplicationController
       @closed_conditions = PatientCondition.where.not(:cured => nil)
     end
 
-    @appointments = Appointment.where("date > ?", Date.today)
+    @appointments = Appointment.where("date > ?", Date.yesterday)
   end
 
   private

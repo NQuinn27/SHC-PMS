@@ -1,5 +1,6 @@
 class DoctorsController < ApplicationController
   before_action :set_doctor, only: [:show, :edit, :update, :destroy]
+  before_action :check_admin
 
   # GET /doctors
   # GET /doctors.json
@@ -68,6 +69,13 @@ class DoctorsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_doctor
       @doctor = Doctor.find(params[:id])
+    end
+
+    def check_admin
+      if !current_user.admin?
+        flash[:error] = 'Access denied. User is not admin'
+        redirect_to root_url
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

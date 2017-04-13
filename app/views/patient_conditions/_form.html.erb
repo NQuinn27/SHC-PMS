@@ -52,14 +52,14 @@
 
 <script type="text/javascript">
 
-  const endpoint = 'http://localhost:3000<%= icd10s_path %>.json';
+  const endpoint = '/<%= icd10s_path %>.json';
   console.log(endpoint);
   var icd10s = [];
 
   function search() {
     icd10s = [];
     const value = document.getElementById("searchBox").value;
-    const sendpoint = `http://localhost:3000<%= icd10s_path %>.json?search=${value}`;
+    const sendpoint = `<%= request.base_url %><%= icd10s_path %>.json?search=${value}`;
     console.log(sendpoint);
     $.ajax({ url: sendpoint,
       type: 'GET',

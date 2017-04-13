@@ -1,0 +1,60 @@
+<% if @closed_conditions %>
+  <div class="tab-pane" id="5a">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>Closed Conditions</h1>
+            <%= form_tag('reports', :method => "get", id: "search-form-3", :remote => true) do %>
+              <%= text_field_tag :search_closed_conditions, params[:search_closed_conditions], autofocus: true, placeholder: "Search Conditions", :onchange => 'this.form.submit()', :autocomplete => :off %>
+              <%= submit_tag "Search", :class => "btn btn-default" %>
+            <% end %>
+            <table class="table">
+              <thead class="posts_head">
+                <tr>
+                  <th>
+                    <%= sortable "code" %>
+                    <% if @sorting_by == "code" %>
+                      <div class="glyphicon <%= @glyphicon %>"></div>
+                    <% end %>
+                  </th>
+                  <th>
+                    Description
+                  </th>
+                  <th>
+                    Additional
+                  </th>
+                  <th>
+                    Reported
+                  </th>
+                  <th>
+                    Cured
+                  </th>
+                  <th>
+                    Notes
+                  </th>
+                  <th>
+                    Reporting Doctor
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="posts_body">
+                <% @closed_conditions.each do |condition| %>
+                  <tr>
+                    <td><%= condition.icd10.code %></td>
+                    <td><%= condition.icd10.description %></td>
+                    <td><%= condition.icd10.additional %></td>
+                    <td><%= condition.reported %></td>
+                    <td><%= condition.cured %></td>
+                    <td><%= condition.notes %></td>
+                    <td><%= condition.doctor.first_name + " " + condition.doctor.last_name %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

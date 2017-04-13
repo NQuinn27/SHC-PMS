@@ -1,4 +1,20 @@
 <p id="notice"><%= notice %></p>
 
+<p>
+  <strong>Code:</strong>
+  <%= @icd10.code %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @icd10.description %>
+</p>
+
+<p>
+  <strong>Additional:</strong>
+  <%= @icd10.additional %>
+</p>
+
 <%= link_to 'Edit', edit_icd10_path(@icd10) %> |
 <%= link_to 'Back', icd10s_path %>
+
